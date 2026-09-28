@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "naac-network-reliability"
+version = "0.1.0"
+description = "Network Reliability Dashboard App for NAAC"
+authors = ["Amit Gupta <gupta-amit@hcltech.com>"]
+readme = "README.md"
+keywords = ["nautobot", "nautobot-plugin", "network-reliability", "dashboard", "naac"]
+include = [
+    "README.md",
+]
+packages = [
+    { include = "naac_network_reliability" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.14"
+# Used for local development
+nautobot = ">=3.1.0,<3.2.0"
+requests = ">=2.32,<3.0"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,40 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}NAAC Network Reliability{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'naac_network_reliability/dashboard.css' %}">
+<section class="naac-dashboard">
+  <div class="naac-heading">
+    <div>
+      <p class="naac-eyebrow">NAAC / PHASE 1</p>
+      <h1>Network Reliability</h1>
+      <p>Global device availability &middot; Hardcoded sample data</p>
+    </div>
+    <a class="naac-button" href="{% url 'plugins:naac_network_reliability:dashboard' %}">Refresh data</a>
+  </div>
+  {% if source_error %}
+    <div class="naac-error" role="alert">
+      <h2>Availability data unavailable</h2>
+      <p>{{ source_error }}</p>
+    </div>
+  {% else %}
+    <div class="naac-cards">
+      <article class="naac-card">
+        <h2>Global availability</h2>
+        <strong>{% if snapshot.availability != None %}{{ snapshot.availability|floatformat:2 }}%{% else %}N/A{% endif %}</strong>
+        <p>Available &divide; all devices, including unknown states</p>
+      </article>
+      <article class="naac-card">
+        <h2>Total devices</h2>
+        <strong>{{ snapshot.total }}</strong>
+        <p>All devices in the snapshot</p>
+      </article>
+      <article class="naac-card">
+        <h2>Available devices</h2>
+        <strong>{{ snapshot.available }}</strong>
+        <p>Devices with available status</p>
+      </article>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
