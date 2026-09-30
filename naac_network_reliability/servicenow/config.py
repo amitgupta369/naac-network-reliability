@@ -29,16 +29,22 @@ def validate_config(config):
     username = config.get("username", "")
     password = config.get("password", "")
     token = config.get("token", "")
-    for value in [username, password, token]:
+    client_id = config.get("client_id", "")
+    client_secret = config.get("client_secret", "")
+    for value in [username, password, token, client_id, client_secret]:
         if not isinstance(value, str):
             raise ServiceNowError("ServiceNow credentials must be strings.")
 
-    if not token and not (username and password):
-        raise ServiceNowError("Configure a ServiceNow bearer token or service-account credentials.")
+    if (client_id and not client_secret) or (client_secret and not client_id):
+        raise ServiceNowError("Configure both ServiceNow client_id and client_secret.")
+    if not token and not client_id and not (username and password):
+        raise ServiceNowError("Configure a bearer token, OAuth client credentials, or username/password.")
 
     return {
         "instance_url": instance_url,
         "username": username,
         "password": password,
         "token": token,
+        "client_id": client_id,
+        "client_secret": client_secret,
     }

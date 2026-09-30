@@ -6,6 +6,7 @@ from urllib.parse import urlencode
 import requests
 
 from .exceptions import ServiceNowError
+from .auth import authenticate
 
 
 class ServiceNowClient:
@@ -42,10 +43,7 @@ class ServiceNowClient:
                 selected_fields.append(field)
         with requests.Session() as session:
             session.headers.update({"Accept": "application/json"})
-            if self.config["token"]:
-                session.headers["Authorization"] = "Bearer " + self.config["token"]
-            else:
-                session.auth = (self.config["username"], self.config["password"])
+            authenticate(session, self.config)
             for page in range(self.MAX_PAGES):
                 try:
                     response = session.get(
