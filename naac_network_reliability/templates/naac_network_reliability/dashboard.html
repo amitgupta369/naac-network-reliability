@@ -8,7 +8,7 @@
     <div>
       <p class="naac-eyebrow">NAAC / PHASE 1</p>
       <h1>Network Reliability</h1>
-      <p>Global device availability &middot; Hardcoded sample data</p>
+      <p>Device availability (sample data) &middot; ServiceNow incidents</p>
     </div>
     <a class="naac-button" href="{% url 'plugins:naac_network_reliability:dashboard' %}">Refresh data</a>
   </div>
@@ -36,5 +36,21 @@
       </article>
     </div>
   {% endif %}
+  <div class="naac-incident-section">
+    <article class="naac-card naac-incidents naac-risk-{% if incident_error %}unknown{% else %}{{ incidents.risk }}{% endif %}">
+      <h2>P1 / P2 incidents</h2>
+      {% if incident_error %}
+        <span class="naac-status">Unknown</span>
+        <p role="alert">{{ incident_error }}</p>
+      {% else %}
+        <span class="naac-status">{{ incidents.risk_label }}</span>
+        <strong>{{ incidents.total }} open</strong>
+        <p>{{ incidents.p1 }} P1 &middot; {{ incidents.p2 }} P2</p>
+        <p>Configured assignment groups &middot; High risk when P1 &ge; 1</p>
+        <a class="naac-button" href="{{ incidents.list_url }}" target="_blank" rel="noopener noreferrer">View in ServiceNow</a>
+        <p class="naac-meta">Updated {{ incidents.fetched_at|date:"Y-m-d H:i:s T" }}</p>
+      {% endif %}
+    </article>
+  </div>
 </section>
 {% endblock %}

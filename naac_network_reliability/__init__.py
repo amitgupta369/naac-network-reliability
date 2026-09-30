@@ -8,6 +8,6 @@ class NetworkReliabilityConfig(NautobotAppConfig):
     base_url = "network-reliability"
     min_version = "3.1.0"
     max_version = "3.1.999"
-    default_settings = {"source": {}}
+    default_settings = {"source": {}, "servicenow": {}}
 
 config = NetworkReliabilityConfig

@@ -1,8 +1,10 @@
-﻿from django.conf import settings
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 from .services import SourceError, fetch_snapshot
+from .incidents import fetch_incident_summary
+from .servicenow.exceptions import ServiceNowError
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -22,5 +24,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             context["snapshot"] = fetch_snapshot(source_config)
         except SourceError as error:
             context["source_error"] = str(error)
+
+        try:
+            context["incidents"] = fetch_incident_summary(app_config.get("servicenow", {}))
+        except ServiceNowError as error:
+            context["incident_error"] = str(error)
 
         return context
