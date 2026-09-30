@@ -46,9 +46,9 @@
         <span class="naac-status">{{ incidents.risk_label }}</span>
         <strong>{{ incidents.total }} open</strong>
         <p>{{ incidents.p1 }} P1 &middot; {{ incidents.p2 }} P2</p>
-        <p>Configured assignment groups &middot; High risk when P1 &ge; 1</p>
+        <p>Network P1/P2 Summary</p>
         <a class="naac-button" href="{{ incidents.list_url }}" target="_blank" rel="noopener noreferrer">View in ServiceNow</a>
-        <p class="naac-meta">Updated {{ incidents.fetched_at|date:"Y-m-d H:i:s T" }}</p>
+
       {% endif %}
     </article>
   </div>
